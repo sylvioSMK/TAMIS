@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
   <style>
     :root {
       --primary: #1d3557;
@@ -16,10 +15,10 @@
       --text-dark: #2d3142;
       --text-light: #ffffff;
     }
-        body {
+    body {
       margin: 0;
       font-family: 'Urbanist', sans-serif;
-      background: var(--background); /* Suppression du dégradé */
+      background: var(--background);
       color: var(--text-dark);
       display: flex;
       flex-direction: column;
@@ -27,13 +26,11 @@
       overflow-x: hidden;
     }
     header {
-      background: var(--primary); /* Suppression du dégradé */
+      background: var(--primary);
       color: var(--text-light);
       text-align: center;
       padding: 3rem 1rem 2rem 1rem;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
-      position: relative;
-      overflow: hidden;
     }
     .logo {
       height: 70px;
@@ -65,13 +62,20 @@
     .slogan.visible {
       opacity: 1;
     }
+    main.home {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     .presentation {
-      max-width: 600px;
-      margin: 2rem auto 0 auto;
+      max-width: 700px;
+      margin-bottom: 2rem;
       background: #fff;
       border-radius: 1.5rem;
       box-shadow: 0 8px 32px rgba(29,53,87,0.08);
-      padding: 2rem 2rem 1.5rem 2rem;
+      padding: 2rem;
       font-size: 1.1rem;
       opacity: 0;
       transform: translateY(40px);
@@ -81,60 +85,59 @@
       opacity: 1;
       transform: translateY(0);
     }
-    main.home {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1rem 1rem 1rem;
-      gap: 2.5rem;
-      position: relative;
-      z-index: 1;
+    .entreprises-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 2rem auto;
+    }
+    .entreprise-card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .entreprise-card:hover {
+      transform: scale(1.03);
+    }
+    .entreprise-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .entreprise-card .info {
+      padding: 1rem;
+      text-align: center;
+    }
+    .entreprise-card .info h3 {
+      margin: 0.5rem 0 0.2rem 0;
+      color: var(--primary);
+    }
+    .entreprise-card .info p {
+      font-size: 0.95rem;
+      color: #555;
     }
     .btn-group {
       display: flex;
       gap: 2rem;
       flex-wrap: wrap;
       justify-content: center;
+      margin-top: 2rem;
     }
     .btn {
       background: linear-gradient(90deg, var(--accent) 80%, #ff9500 100%);
       color: var(--text-light);
       font-weight: 700;
-      padding: 1.1rem 2.5rem;
-      border-radius: 2.5rem;
+      padding: 1rem 2rem;
+      border-radius: 2rem;
       text-decoration: none;
       font-size: 1.2rem;
       box-shadow: 0 8px 24px rgba(247, 127, 0, 0.18);
       border: none;
       outline: none;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255,255,255,0.2);
-      border-radius: 100%;
-      transform: translate(-50%, -50%);
-      transition: width 0.4s, height 0.4s;
-      z-index: 0;
-    }
-    .btn:hover {
-      background: linear-gradient(90deg, #ff9500 80%, var(--accent) 100%);
-      transform: translateY(-3px) scale(1.04);
-      box-shadow: 0 12px 32px rgba(247, 127, 0, 0.22);
-    }
-    .btn:hover::after {
-      width: 250%;
-      height: 400%;
     }
     footer {
       text-align: center;
@@ -145,12 +148,6 @@
       letter-spacing: 1px;
       margin-top: 2rem;
       box-shadow: 0 -2px 8px rgba(29,53,87,0.07);
-    }
-    @media (max-width: 600px) {
-      header h1 { font-size: 2.1rem; }
-      .presentation { padding: 1.2rem 0.7rem; font-size: 1rem; }
-      .btn { font-size: 1rem; padding: 0.9rem 1.2rem; }
-      .btn-group { gap: 1rem; }
     }
   </style>
 </head>
@@ -170,12 +167,55 @@
       <a href="register_user.html" class="btn">Je suis un utilisateur</a>
       <a href="register_entreprise.html" class="btn">Je suis une entreprise</a>
     </div>
+    <section class="entreprises-grid">
+      <div class="entreprise-card">
+        <br><img src="images/communes.jpg" alt="Mairie Centrale">
+        <div class="info">
+          <h3>Mairie Centrale</h3>
+          <p>Services administratifs rapides et planifiés.</p>
+        </div>
+      </div>
+      <div class="entreprise-card">
+        <br><img src="images/mix by yas.jpg" alt="Togo Telecom">
+        <div class="info">
+          <h3>Togo Telecom</h3>
+          <p>Réservation pour assistance ou souscription à domicile.</p>
+        </div>
+      </div>
+      <div class="entreprise-card">
+        <br><img src="images/ecobank.jpg" alt="Banque Soleil">
+        <div class="info">
+          <h3>Ecobank</h3>
+          <p>Gérez vos démarches bancaires sans stress.</p>
+        </div>
+      </div>
+      <div class="entreprise-card">
+        <br><img src="images/clinique.jpg" alt="Clinique Lumière">
+        <div class="info">
+          <h3>Clinique Lumière</h3>
+          <p>Réservez une consultation sans attendre à la clinique.</p>
+        </div>
+      </div>
+       <div class="entreprise-card">
+        <br><img src="images/moov-africa.jpg" alt="Clinique Lumière">
+        <div class="info">
+          <h3>Moov</h3>
+          <p>Profitez de votre service en toute quiétude.</p>
+        </div>
+      </div>
+      <div class="entreprise-card">
+        <br><img src="images/orabank.jpg" alt="Clinique Lumière">
+        <div class="info">
+          <h3>Orabank</h3>
+          <p>Profitez de votre service en toute quiétude.</p>
+        </div>
+      </div>
+    </section>
   </main>
   <footer>
     &copy; 2025 TAMIS. Tous droits réservés.
   </footer>
   <script>
-    // Animation du slogan (effet machine à écrire)
     const sloganText = "Réduisez les files d'attente, optimisez votre temps";
     const sloganElem = document.getElementById('slogan');
     let i = 0;
