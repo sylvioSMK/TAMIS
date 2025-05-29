@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mairie Centrale | Espace Entreprise</title>
+  <title>Mairie Centrale | Réservations</title>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="images/favicon-32x32.png" type="image/x-icon">
   <style>
     body {
       font-family: 'Urbanist', sans-serif;
-      background: #e3f2fd;
+      background-color: #e3f2fd;
       margin: 0;
       padding: 0;
     }
@@ -20,60 +21,86 @@
     }
     main {
       padding: 2rem;
-      max-width: 700px;
+      max-width: 600px;
       margin: auto;
     }
-    form input, form button {
+    select, button {
       padding: 0.8rem;
       width: 100%;
-      margin-bottom: 1rem;
-      border-radius: 0.5rem;
+      margin: 1rem 0;
       border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-size: 1rem;
     }
-    form button, .btn-sms {
-      background-color: #1565c0;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 2rem;
-      cursor: pointer;
+    .success {
+      background-color: #d1ecf1;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      color: #0c5460;
+      display: none;
+      margin-top: 1rem;
+    }
+    .logo {
+      height: 60px;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Espace Mairie Centrale</h1>
-    <p>Créer des créneaux et notifier les utilisateurs</p>
+    <img src="images/communes.jpg" alt="Logo TAMIS" class="logo">
+    <h1>Mairie Centrale</h1>
+    <p>Réservez votre créneau pour un service rapide</p>
   </header>
+
   <main>
-    <form>
-      <input type="text" placeholder="Service (ex: Acte de naissance)" required>
-      <input type="time" required>
-      <input type="number" placeholder="Nombre max de personnes" required>
-      <button type="submit">Ajouter un créneau</button>
-    </form>
-    <button class="btn-sms" onclick="notifierUtilisateur()">Notifier l'utilisateur</button>
+    <h3>Choisissez un créneau disponible</h3>
+    <select id="creneauSelect">
+      <option value="">-- Sélectionnez un créneau --</option>
+    </select>
+    <button id="reserverBtn">Réserver</button>
+    <div id="confirmation" class="success"></div>
   </main>
 
   <script>
-    function envoyerSMS(numero, message) {
-      fetch('sms_api.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ numero, message })
-      })
-      .then(res => res.json())
-      .then(data => alert(data.message))
-      .catch(err => alert("Erreur d'envoi"));
+    const select = document.getElementById('creneauSelect');
+    const confirmation = document.getElementById('confirmation');
+    const reserverBtn = document.getElementById('reserverBtn');
+
+    function chargerCreneaux() {
+      const creneaux = JSON.parse(localStorage.getItem('creneaux_mairie') || '[]');
+      if (creneaux.length === 0) {
+        const opt = document.createElement('option');
+        opt.textContent = 'Aucun créneau disponible pour le moment.';
+        opt.disabled = true;
+        select.appendChild(opt);
+        return;
+      }
+
+      creneaux.forEach((c, index) => {
+        const option = document.createElement('option');
+        option.value = index; // Index de position
+        option.textContent = `${c.heure} — ${c.service} (${c.max} pers. max)`;
+        select.appendChild(option);
+      });
     }
 
-    function notifierUtilisateur() {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const user = users[users.length - 1];
-      if (!user) return alert("Aucun utilisateur trouvé.");
-      const message = `Bonjour ${user.nom}, votre rendez-vous à la mairie est confirmé.`;
-      envoyerSMS(user.telephone, message);
+    function reserver() {
+      const selectedIndex = select.value;
+      if (selectedIndex === '') {
+        alert('Veuillez sélectionner un créneau.');
+        return;
+      }
+
+      const creneaux = JSON.parse(localStorage.getItem('creneaux_mairie') || '[]');
+      const creneau = creneaux[parseInt(selectedIndex)];
+
+      confirmation.textContent = `✅ Réservation confirmée pour le service "${creneau.service}" à ${creneau.heure}.`;
+      confirmation.style.display = 'block';
     }
+
+    reserverBtn.addEventListener('click', reserver);
+    window.onload = chargerCreneaux;
   </script>
 </body>
 </html>

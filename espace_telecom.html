@@ -6,6 +6,7 @@
   <title>Togo Telecom | Espace Entreprise</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="images/favicon-32x32.png" type="image/x-icon">
   <style>
     body {
       font-family: 'Urbanist', sans-serif;
@@ -24,20 +25,29 @@
       max-width: 700px;
       margin: auto;
     }
-    form input, form button {
+    form input, form button, .btn-toggle {
       padding: 0.8rem;
       width: 100%;
       margin-bottom: 1rem;
       border-radius: 0.5rem;
       border: 1px solid #ccc;
     }
-    form button {
+    form button, .btn-toggle {
       background-color: #f57f17;
       color: white;
       font-weight: bold;
       border: none;
       border-radius: 2rem;
       cursor: pointer;
+    }
+    .creneaux-list {
+      background: white;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-top: 1rem;
+    }
+    .creneau-item {
+      margin-bottom: 0.5rem;
     }
     canvas {
       background: white;
@@ -53,12 +63,14 @@
     <p>Gérez vos créneaux et performances</p>
   </header>
   <main>
-    <form>
-      <input type="text" placeholder="Service (ex: Abonnement fibre)" required>
-      <input type="time" required>
-      <input type="number" placeholder="Nombre max de personnes" required>
-      <button type="submit">Ajouter un créneau</button>
+    <button class="btn-toggle" onclick="toggleForm()">+ Créer un créneau</button>
+    <form id="formCreneau" style="display:none;" onsubmit="ajouterCreneau(event)">
+      <input id="service" type="text" placeholder="Service (ex: Abonnement fibre)" required>
+      <input id="heure" type="time" required>
+      <input id="max" type="number" placeholder="Nombre max de personnes" required>
+      <button type="submit">Ajouter le créneau</button>
     </form>
+    <div class="creneaux-list" id="listeCreneaux"></div>
     <h3>Performance hebdomadaire</h3>
     <canvas id="chartTelecom"></canvas>
   </main>
@@ -82,6 +94,35 @@
         }
       }
     });
+
+    function toggleForm() {
+      const form = document.getElementById('formCreneau');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function ajouterCreneau(event) {
+      event.preventDefault();
+      const service = document.getElementById('service').value;
+      const heure = document.getElementById('heure').value;
+      const max = document.getElementById('max').value;
+      const creneaux = JSON.parse(localStorage.getItem('creneaux_telecom') || '[]');
+      creneaux.push({ service, heure, max });
+      localStorage.setItem('creneaux_telecom', JSON.stringify(creneaux));
+      afficherCreneaux();
+      event.target.reset();
+      alert("Créneau ajouté avec succès ! Il sera visible pour les utilisateurs.");
+    }
+
+    function afficherCreneaux() {
+      const container = document.getElementById('listeCreneaux');
+      const creneaux = JSON.parse(localStorage.getItem('creneaux_telecom') || '[]');
+      container.innerHTML = '<h3>Créneaux ajoutés :</h3>';
+      creneaux.forEach(c => {
+        container.innerHTML += `<div class="creneau-item">🕒 ${c.heure} | ${c.service} (${c.max} pers. max)</div>`;
+      });
+    }
+
+    window.onload = afficherCreneaux;
   </script>
 </body>
 </html>
