@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion Mairie Centrale | TAMIS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background-color: #e3f2fd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 450px;
+    }
+    h2 {
+      text-align: center;
+      color: #1565c0;
+    }
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #1565c0;
+      color: white;
+      border: none;
+      border-radius: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Connexion - Mairie Centrale</h2>
+    <form onsubmit="redirectToMairie(event)">
+      <input type="email" placeholder="Email" required>
+      <input type="password" placeholder="Mot de passe" required>
+      <button type="submit">Se connecter</button>
+    </form>
+  </div>
+  <script>
+    function redirectToMairie(event) {
+      event.preventDefault();
+      window.location.href = "espace_mairie.html";
+    }
+  </script>
+</body>
+</html>

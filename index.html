@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAMIS | Accueil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --primary: #1d3557;
+      --accent: #f77f00;
+      --background: #f1f1f1;
+      --text-dark: #2d3142;
+      --text-light: #ffffff;
+    }
+        body {
+      margin: 0;
+      font-family: 'Urbanist', sans-serif;
+      background: var(--background); /* Suppression du dégradé */
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      background: var(--primary); /* Suppression du dégradé */
+      color: var(--text-light);
+      text-align: center;
+      padding: 3rem 1rem 2rem 1rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
+      position: relative;
+      overflow: hidden;
+    }
+    .logo {
+      height: 70px;
+      margin-bottom: 1rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 16px rgba(29, 53, 87, 0.15);
+      transition: transform 0.4s;
+    }
+    .logo:hover {
+      transform: scale(1.07) rotate(-3deg);
+    }
+    header h1 {
+      font-size: 3.2rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+      font-weight: 800;
+      text-shadow: 1px 2px 8px rgba(0,0,0,0.08);
+    }
+    .slogan {
+      font-size: 1.3rem;
+      font-weight: 600;
+      min-height: 2.2em;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+      letter-spacing: 1px;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+    .slogan.visible {
+      opacity: 1;
+    }
+    .presentation {
+      max-width: 600px;
+      margin: 2rem auto 0 auto;
+      background: #fff;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px rgba(29,53,87,0.08);
+      padding: 2rem 2rem 1.5rem 2rem;
+      font-size: 1.1rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s, transform 1.2s;
+    }
+    .presentation.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    main.home {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem 1rem 1rem;
+      gap: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-group {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      background: linear-gradient(90deg, var(--accent) 80%, #ff9500 100%);
+      color: var(--text-light);
+      font-weight: 700;
+      padding: 1.1rem 2.5rem;
+      border-radius: 2.5rem;
+      text-decoration: none;
+      font-size: 1.2rem;
+      box-shadow: 0 8px 24px rgba(247, 127, 0, 0.18);
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255,255,255,0.2);
+      border-radius: 100%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s, height 0.4s;
+      z-index: 0;
+    }
+    .btn:hover {
+      background: linear-gradient(90deg, #ff9500 80%, var(--accent) 100%);
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 12px 32px rgba(247, 127, 0, 0.22);
+    }
+    .btn:hover::after {
+      width: 250%;
+      height: 400%;
+    }
+    footer {
+      text-align: center;
+      padding: 1.2rem 0 0.7rem 0;
+      font-size: 1rem;
+      background-color: var(--primary);
+      color: var(--text-light);
+      letter-spacing: 1px;
+      margin-top: 2rem;
+      box-shadow: 0 -2px 8px rgba(29,53,87,0.07);
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 2.1rem; }
+      .presentation { padding: 1.2rem 0.7rem; font-size: 1rem; }
+      .btn { font-size: 1rem; padding: 0.9rem 1.2rem; }
+      .btn-group { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/WhatsApp Image 2025-05-28 at 09.07.05.jpeg" alt="Logo TAMIS" class="logo">
+    <h1>TAMIS</h1>
+    <div class="slogan" id="slogan"></div>
+  </header>
+  <main class="home">
+    <div class="presentation" id="presentation">
+      TAMIS est la solution innovante pour réduire les files d’attente et optimiser votre temps dans les services publics et privés. 
+      <br><br>
+      <b>Réservez votre créneau en ligne, présentez-vous à l’heure, et profitez d’un service rapide et efficace !</b>
+    </div>
+    <div class="btn-group">
+      <a href="register_user.html" class="btn">Je suis un utilisateur</a>
+      <a href="register_entreprise.html" class="btn">Je suis une entreprise</a>
+    </div>
+  </main>
+  <footer>
+    &copy; 2025 TAMIS. Tous droits réservés.
+  </footer>
+  <script>
+    // Animation du slogan (effet machine à écrire)
+    const sloganText = "Réduisez les files d'attente, optimisez votre temps";
+    const sloganElem = document.getElementById('slogan');
+    let i = 0;
+    function typeSlogan() {
+      if (i < sloganText.length) {
+        sloganElem.textContent += sloganText.charAt(i);
+        i++;
+        setTimeout(typeSlogan, 38);
+      } else {
+        sloganElem.classList.add('visible');
+      }
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(typeSlogan, 400);
+      setTimeout(() => {
+        document.getElementById('presentation').classList.add('visible');
+      }, 1800);
+    });
+  </script>
+</body>
+</html>
